@@ -1,5 +1,6 @@
 fn main() {
-    decode("gccgacgaa");
+    //last 3 letters skipped because of the sto amino
+    decode("auggccgacgaaugagcc");
 }
 
 fn decode(dna: &str) {
@@ -15,9 +16,11 @@ fn decode(dna: &str) {
     }
     for index in (0..dna_vec.len()).step_by(STEP as usize) {
         let mut amino_chars: Vec<char> = Vec::new();
-        amino_chars.push(dna_vec[index]);
-        amino_chars.push(dna_vec[index + 1]);
-        amino_chars.push(dna_vec[index + 2]);
+        amino_chars = dna_vec[index..index + 3].to_vec();
+        if match_amino(amino_chars.clone()) == "stop" {
+            amino_vec.push("stop".to_string());
+            break;
+        }
         amino_vec.push(match_amino(amino_chars));
     }
     if &amino_vec[0] != "met" {
@@ -38,6 +41,8 @@ fn match_amino(amino: Vec<char>) -> String {
         ['u', 'c', _val] => "ser",
         ['u', 'a', val] if *val == 'u' || *val == 'c' => "tyr",
         ['a', 'u', 'g'] => "met",
+        ['u', 'a', val] if *val == 'a' || *val == 'g' => "stop",
+        ['u', 'g', 'a'] => "stop",
         _ => "leck",
     };
     return x.to_string();
