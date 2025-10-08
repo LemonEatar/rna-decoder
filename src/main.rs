@@ -40,9 +40,11 @@ fn match_amino(amino: Vec<char>) -> String {
         ['u', 'u', val] if *val == 'a' || *val == 'g' => "leu",
         ['u', 'c', _val] => "ser",
         ['u', 'a', val] if *val == 'u' || *val == 'c' => "tyr",
-        ['a', 'u', 'g'] => "met",
         ['u', 'a', val] if *val == 'a' || *val == 'g' => "stop",
+        ['u', 'g', val] if *val == 'u' || *val == 'c' => "cys",
         ['u', 'g', 'a'] => "stop",
+        ['u', 'g', 'g'] => "trp",
+        ['a', 'u', 'g'] => "met",
         _ => "leck",
     };
     return x.to_string();
